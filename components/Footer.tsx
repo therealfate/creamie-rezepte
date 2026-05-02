@@ -44,9 +44,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t py-6 text-xs text-[var(--muted)] space-y-2">
+        <div className="border-t py-6 text-xs text-[var(--muted)] space-y-3">
+          <p>
+            <strong>Markenrechtlicher Hinweis:</strong> Ninja®, Ninja Creami®
+            und Ninja Swirl® sind eingetragene Marken der SharkNinja Operating
+            LLC. creamie-rezepte.de ist nicht mit SharkNinja verbunden,
+            autorisiert oder gesponsert. Markennennungen erfolgen rein
+            deskriptiv (§ 23 MarkenG).
+          </p>
           <p>{siteConfig.legal.affiliateDisclaimer}</p>
-          <p>© {new Date().getFullYear()} {siteConfig.author.name}. Alle Rechte vorbehalten.</p>
+          <p>
+            © {new Date().getFullYear()} {siteConfig.author.name}. Alle Rechte
+            vorbehalten.
+          </p>
         </div>
       </Container>
     </footer>
