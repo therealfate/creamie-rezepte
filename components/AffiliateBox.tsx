@@ -12,8 +12,10 @@ export function AffiliateBox({
   items,
 }: {
   title?: string;
-  items: Item[];
+  items?: Item[];
 }) {
+  const list = items ?? [];
+  if (list.length === 0) return null;
   return (
     <aside className="my-10 p-6 bg-cream-100 border border-cream-200 rounded-2xl">
       <h3 className="font-display text-lg font-semibold mb-1">{title}</h3>
@@ -21,7 +23,7 @@ export function AffiliateBox({
         Affiliate-Empfehlungen – getestet, ehrlich. Mit * markiert.
       </p>
       <ul className="space-y-3">
-        {items.map((item, i) => (
+        {list.map((item, i) => (
           <li
             key={i}
             className="flex items-start justify-between gap-4 pb-3 border-b last:border-b-0"

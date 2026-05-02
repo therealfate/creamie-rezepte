@@ -3,8 +3,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 import { Container } from "@/components/Container";
 import { RecipeMeta } from "@/components/RecipeMeta";
@@ -132,7 +130,7 @@ export default async function RecipePage({
               Zutaten
             </h2>
             <ul className="space-y-2">
-              {recipe.ingredients.map((ing, i) => (
+              {(recipe.ingredients ?? []).map((ing, i) => (
                 <li
                   key={i}
                   className="flex items-start gap-3 text-[1.0625rem] leading-relaxed"
@@ -148,7 +146,7 @@ export default async function RecipePage({
               Zubereitung
             </h2>
             <ol className="space-y-3">
-              {recipe.instructions.map((step, i) => (
+              {(recipe.instructions ?? []).map((step, i) => (
                 <li key={i} className="flex gap-4 text-[1.0625rem] leading-relaxed">
                   <span className="font-display font-semibold text-berry-600 flex-shrink-0">
                     {i + 1}.
@@ -172,13 +170,6 @@ export default async function RecipePage({
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
-                rehypePlugins: [
-                  rehypeSlug,
-                  [
-                    rehypeAutolinkHeadings,
-                    { behavior: "wrap", properties: { className: "anchor" } },
-                  ],
-                ],
               },
             }}
           />

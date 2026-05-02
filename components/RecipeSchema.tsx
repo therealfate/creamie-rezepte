@@ -23,8 +23,8 @@ export function RecipeSchema({ recipe }: { recipe: Recipe }) {
     recipeYield: recipe.yields,
     recipeCategory: recipe.category,
     recipeCuisine: recipe.cuisine,
-    recipeIngredient: recipe.ingredients,
-    recipeInstructions: recipe.instructions.map((text) => ({
+    recipeIngredient: recipe.ingredients ?? [],
+    recipeInstructions: (recipe.instructions ?? []).map((text) => ({
       "@type": "HowToStep",
       text,
     })),
