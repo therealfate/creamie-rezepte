@@ -160,3 +160,79 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary:hover {
   background-color: var(--color-cream-300);
 }
+
+/* Print layout for recipe pages */
+@media print {
+  /* Hide non-content elements */
+  header nav,
+  footer,
+  .no-print,
+  [data-no-print],
+  button,
+  form {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: #000;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Show full URLs for links */
+  .prose-recipe a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Remove interactive styles */
+  .prose-recipe a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Keep recipe meta and ingredients readable */
+  article {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Recipe hero: don't waste print space */
+  header .relative.aspect-\[16\/10\] {
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  /* Ensure headings don't break across pages */
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Keep steps together */
+  ol li {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Affiliate boxes: hide on print */
+  [class*="affiliate"],
+  [class*="AffiliateBox"],
+  [class*="newsletter"],
+  [class*="NewsletterForm"],
+  [class*="AuthorBox"],
+  [class*="RelatedRecipes"],
+  [class*="IceMode"],
+  [class*="PortionConverter"] {
+    display: none !important;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 2cm 2.5cm;
+    size: A4;
+  }
+}
