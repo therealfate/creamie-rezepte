@@ -11,6 +11,7 @@ import { AffiliateBox } from "@/components/AffiliateBox";
 import { AuthorBox } from "@/components/AuthorBox";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PortionConverter } from "@/components/PortionConverter";
+import { IceMode } from "@/components/IceMode";
 import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/recipes";
 import { siteConfig } from "@/lib/site";
 import { formatDate } from "@/lib/utils";
@@ -147,6 +148,13 @@ export default async function RecipePage({
               </li>
             ))}
           </ol>
+
+          <IceMode
+            title={recipe.title}
+            steps={recipe.instructions ?? []}
+            ingredients={recipe.ingredients ?? []}
+            basePortions={parseInt(recipe.yields, 10) || 4}
+          />
         </div>
 
         {recipe.affiliate && recipe.affiliate.length > 0 && (
