@@ -22,14 +22,23 @@ export default function NewsletterDankePage() {
         Spam-Ordner nach oder schreib mir eine kurze Nachricht.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <Link href="/rezepte" className="btn-primary">
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+        <a
+          href="/lead-magnet.pdf"
+          download="creamie-rezepte-5-beste-ninja-creami-rezepte.pdf"
+          className="btn-primary"
+        >
+          PDF direkt herunterladen
+        </a>
+        <Link href="/rezepte" className="btn-secondary">
           Zu allen Rezepten
         </Link>
-        <Link href="/" className="btn-secondary">
-          Zur Startseite
-        </Link>
       </div>
+
+      <p className="text-sm text-[var(--muted)]">
+        Falls das PDF nicht startet: Rechtsklick → &quot;Speichern unter&quot;.
+        Kommt auch per E-Mail – schau ggf. im Spam-Ordner.
+      </p>
     </Container>
   );
 }

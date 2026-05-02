@@ -28,12 +28,24 @@ export default function NewsletterPage() {
       <div className="mt-16 prose-recipe mx-auto">
         <h2>Was du im PDF bekommst</h2>
         <ul>
-          <li>Klassisches Vanilleeis (das »Geh-immer«-Rezept)</li>
-          <li>Proteineis Schoko mit 25g Eiweiß pro Portion</li>
-          <li>Erdbeer-Sorbet ohne Zuckerzusatz</li>
-          <li>Frozen Yogurt griechische Art</li>
-          <li>Salted-Caramel-Eis als Last-Minute-Dessert</li>
-          <li>+ Bonus: Cremigkeits-Spickzettel mit den 5 wichtigsten Tricks</li>
+          <li>
+            <strong>Proteineis mit Magerquark</strong> – 25 g Eiweiß, 175 kcal,
+            fertig in 5 Minuten
+          </li>
+          <li>
+            <strong>Klassisches Vanilleeis</strong> – das Rezept, das jedes Mal
+            funktioniert
+          </li>
+          <li>
+            <strong>Schokoladeneis</strong> – mit echtem Kakao und Zartbitterschokolade,
+            nicht aus dem Briefchen
+          </li>
+          <li>
+            <strong>Erdbeereis</strong> – warum TK-Erdbeeren besser sind als frische
+          </li>
+          <li>
+            <strong>Mango-Sorbet</strong> – vegan, 120 kcal, nur 5 Zutaten
+          </li>
         </ul>
 
         <h2>Was kommt danach?</h2>
