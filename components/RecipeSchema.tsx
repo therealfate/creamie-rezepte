@@ -6,9 +6,11 @@ export function RecipeSchema({ recipe }: { recipe: Recipe }) {
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: recipe.title,
-    image: [`${siteConfig.url}${recipe.hero.src.startsWith("http") ? "" : recipe.hero.src}`].map((s) =>
-      s.startsWith("http") ? s : recipe.hero.src
-    ),
+    image: [
+      recipe.hero.src.startsWith("http")
+        ? recipe.hero.src
+        : `${siteConfig.url}${recipe.hero.src}`,
+    ],
     author: {
       "@type": "Person",
       name: siteConfig.author.name,

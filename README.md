@@ -1,4 +1,4 @@
-# creami-rezepte.de
+# creamie-rezepte.de
 
 Das deutsche Rezept-Magazin für die Ninja Creami und Ninja Swirl. Über 200 getestete Eis-, Sorbet- und Frozen-Yogurt-Rezepte – authentisch, erprobt, mit Liebe gemacht.
 
@@ -37,16 +37,16 @@ npm run dev
    ```
 3. **Vercel verbinden**: Auf [vercel.com/new](https://vercel.com/new) das Repo importieren. Vercel erkennt Next.js automatisch.
 4. **Environment Variables setzen** (im Vercel Dashboard → Project Settings → Environment Variables):
-   - `NEXT_PUBLIC_SITE_URL` = `https://creami-rezepte.de` (oder dein vercel-Subdomain)
+   - `NEXT_PUBLIC_SITE_URL` = `https://creamie-rezepte.de` (oder dein vercel-Subdomain)
    - `BREVO_API_KEY` = (sobald du Brevo hast, sonst leer lassen)
    - `BREVO_LIST_ID` = (Brevo Liste-ID)
 5. **Deploy** drücken. Erstes Build dauert ~2 Minuten.
 
 ### Custom Domain anbinden
 
-Sobald `creami-rezepte.de` registriert ist:
+Sobald `creamie-rezepte.de` registriert ist:
 
-1. Im Vercel Dashboard → Domains → `creami-rezepte.de` hinzufügen.
+1. Im Vercel Dashboard → Domains → `creamie-rezepte.de` hinzufügen.
 2. Beim Registrar (INWX, IONOS etc.) den Cloudflare-Nameservern wechseln (oder direkt die Vercel-Werte als CNAME-A-Record eintragen):
    - Vercel zeigt dir die exakten DNS-Records.
 3. SSL läuft automatisch (Let's Encrypt).
