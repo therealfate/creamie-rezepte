@@ -58,8 +58,9 @@ function formatMMSS(seconds: number): string {
 
 function vibrate(pattern: number | number[]) {
   try {
-    // @ts-expect-error vibrate is available in some browsers only
-    navigator.vibrate?.(pattern);
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+      navigator.vibrate(pattern);
+    }
   } catch {
     /* noop */
   }
@@ -67,9 +68,14 @@ function vibrate(pattern: number | number[]) {
 
 function playBeep() {
   try {
-    const ctx = new (window.AudioContext ||
-      // @ts-expect-error vendor prefix legacy
-      window.webkitAudioContext)();
+    const Ctor =
+      typeof window !== "undefined"
+        ? window.AudioContext ||
+          (window as unknown as { webkitAudioContext?: typeof AudioContext })
+            .webkitAudioContext
+        : null;
+    if (!Ctor) return;
+    const ctx = new Ctor();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.frequency.value = 880;
@@ -88,32 +94,36 @@ function playBeep() {
 
 /* ---------- Hook: Wake Lock ---------- */
 
+type WakeLockSentinelLike = { release(): Promise<void> };
+type WakeLockApi = {
+  request(type: "screen"): Promise<WakeLockSentinelLike>;
+};
+
+function getWakeLockApi(): WakeLockApi | null {
+  if (typeof navigator === "undefined") return null;
+  const nav = navigator as unknown as { wakeLock?: WakeLockApi };
+  return nav.wakeLock ?? null;
+}
+
 function useWakeLock(active: boolean) {
-  const sentinelRef = useRef<unknown>(null);
+  const sentinelRef = useRef<WakeLockSentinelLike | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     async function request() {
       try {
-        if (
-          typeof navigator !== "undefined" &&
-          "wakeLock" in navigator &&
-          // @ts-expect-error WakeLock is browser-API, not in types
-          typeof navigator.wakeLock?.request === "function"
-        ) {
-          // @ts-expect-error see above
-          const lock = await navigator.wakeLock.request("screen");
-          if (cancelled) {
-            try {
-              // @ts-expect-error see above
-              await lock.release?.();
-            } catch {
-              /* noop */
-            }
-            return;
+        const api = getWakeLockApi();
+        if (!api) return;
+        const lock = await api.request("screen");
+        if (cancelled) {
+          try {
+            await lock.release();
+          } catch {
+            /* noop */
           }
-          sentinelRef.current = lock;
+          return;
         }
+        sentinelRef.current = lock;
       } catch {
         /* WakeLock nicht verfügbar – stiller Fallback */
       }
@@ -122,7 +132,11 @@ function useWakeLock(active: boolean) {
     if (active) request();
 
     function onVisibility() {
-      if (active && document.visibilityState === "visible" && !sentinelRef.current) {
+      if (
+        active &&
+        document.visibilityState === "visible" &&
+        !sentinelRef.current
+      ) {
         request();
       }
     }
@@ -133,12 +147,9 @@ function useWakeLock(active: boolean) {
       document.removeEventListener("visibilitychange", onVisibility);
       const s = sentinelRef.current;
       if (s) {
-        try {
-          // @ts-expect-error see above
-          s.release?.();
-        } catch {
+        s.release().catch(() => {
           /* noop */
-        }
+        });
         sentinelRef.current = null;
       }
     };
