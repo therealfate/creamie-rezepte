@@ -12,6 +12,8 @@ import { AuthorBox } from "@/components/AuthorBox";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PortionConverter } from "@/components/PortionConverter";
 import { IceMode } from "@/components/IceMode";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { RelatedRecipes } from "@/components/RelatedRecipes";
 import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/recipes";
 import { siteConfig } from "@/lib/site";
 import { formatDate } from "@/lib/utils";
@@ -64,6 +66,14 @@ export default async function RecipePage({
       {/* HERO */}
       <header className="bg-cream-100 border-b">
         <Container size="narrow" className="py-10 sm:py-14">
+          <Breadcrumbs
+            items={[
+              { label: "Start", href: "/" },
+              { label: "Rezepte", href: "/rezepte" },
+              { label: recipe.cluster },
+              { label: recipe.title },
+            ]}
+          />
           <p className="text-xs uppercase tracking-[0.2em] text-berry-600 font-semibold mb-3">
             {recipe.cluster}
           </p>
@@ -176,6 +186,10 @@ export default async function RecipePage({
 
         <AuthorBox />
         <NewsletterForm />
+      </Container>
+
+      <Container size="default">
+        <RelatedRecipes current={recipe} />
       </Container>
     </article>
   );
