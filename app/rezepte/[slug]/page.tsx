@@ -10,6 +10,7 @@ import { RecipeSchema } from "@/components/RecipeSchema";
 import { AffiliateBox } from "@/components/AffiliateBox";
 import { AuthorBox } from "@/components/AuthorBox";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { PortionConverter } from "@/components/PortionConverter";
 import { getAllRecipeSlugs, getRecipeBySlug } from "@/lib/recipes";
 import { siteConfig } from "@/lib/site";
 import { formatDate } from "@/lib/utils";
@@ -124,38 +125,28 @@ export default async function RecipePage({
           rating={recipe.rating}
         />
 
-        <div className="grid sm:grid-cols-2 gap-8 my-10">
-          <div>
-            <h2 className="font-display text-2xl font-semibold mb-4">
-              Zutaten
-            </h2>
-            <ul className="space-y-2">
-              {(recipe.ingredients ?? []).map((ing, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-3 text-[1.0625rem] leading-relaxed"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-berry-500 mt-2.5 flex-shrink-0" />
-                  <span>{ing}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-display text-2xl font-semibold mb-4">
-              Zubereitung
-            </h2>
-            <ol className="space-y-3">
-              {(recipe.instructions ?? []).map((step, i) => (
-                <li key={i} className="flex gap-4 text-[1.0625rem] leading-relaxed">
-                  <span className="font-display font-semibold text-berry-600 flex-shrink-0">
-                    {i + 1}.
-                  </span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
+        <PortionConverter
+          ingredients={recipe.ingredients ?? []}
+          basePortions={parseInt(recipe.yields, 10) || 4}
+        />
+
+        <div className="my-10">
+          <h2 className="font-display text-2xl font-semibold mb-4">
+            Zubereitung
+          </h2>
+          <ol className="space-y-3">
+            {(recipe.instructions ?? []).map((step, i) => (
+              <li
+                key={i}
+                className="flex gap-4 text-[1.0625rem] leading-relaxed"
+              >
+                <span className="font-display font-semibold text-berry-600 flex-shrink-0">
+                  {i + 1}.
+                </span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {recipe.affiliate && recipe.affiliate.length > 0 && (
